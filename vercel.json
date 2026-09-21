@@ -1,0 +1,14 @@
+{
+  "framework": null,
+  "functions": {
+    "api/index.py": {
+      "includeFiles": "templates/**,knn_loan_model.pkl,scaler.pkl"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/api/index.py"
+    }
+  ]
+}

@@ -24,6 +24,13 @@ app.add_middleware(
 
 # Paths to model artifacts
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+if not os.path.exists(os.path.join(BASE_DIR, 'knn_loan_model.pkl')):
+    parent_dir = os.path.dirname(BASE_DIR)
+    if os.path.exists(os.path.join(parent_dir, 'knn_loan_model.pkl')):
+        BASE_DIR = parent_dir
+    elif os.path.exists(os.path.join(os.getcwd(), 'knn_loan_model.pkl')):
+        BASE_DIR = os.getcwd()
+
 MODEL_PATH = os.path.join(BASE_DIR, 'knn_loan_model.pkl')
 SCALER_PATH = os.path.join(BASE_DIR, 'scaler.pkl')
 
@@ -62,6 +69,10 @@ FEATURE_NAMES = [
 from fastapi.responses import HTMLResponse, FileResponse
 
 TEMPLATE_PATH = os.path.join(BASE_DIR, 'templates', 'index.html')
+if not os.path.exists(TEMPLATE_PATH):
+    alt_template = os.path.join(os.getcwd(), 'templates', 'index.html')
+    if os.path.exists(alt_template):
+        TEMPLATE_PATH = alt_template
 
 @app.get("/", response_class=HTMLResponse)
 def home():
